@@ -5,5 +5,5 @@ export default function Page({
     q: string;
   };
 }) {
-  return <h1>Search Page</h1>;
+  return <h1>Search: {searchParams.q}</h1>;
 }
