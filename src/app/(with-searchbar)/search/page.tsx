@@ -1,20 +1,25 @@
-import dummyData from "@/mocks/dummy.json";
 import style from "./page.module.css";
 import Link from "next/link";
 import MovieItem from "@/components/movie-item";
+import { MovieData } from "@/types";
 
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
   searchParams: {
     q: string;
   };
 }) {
-  const serachName = searchParams.q as string;
-
-  const searchMovie = dummyData.filter(({ title }) =>
-    title.includes(serachName)
+  const serachName = searchParams.q;
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_MOVIE_API_URL}/movie/search?q=${serachName}`
   );
+
+  if (!response.ok) {
+    return <div>오류가 발생했습니다 ...</div>;
+  }
+
+  const searchMovie: MovieData[] = await response.json();
 
   if (searchMovie.length === 0) {
     return (

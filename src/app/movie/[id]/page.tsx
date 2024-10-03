@@ -1,8 +1,7 @@
-import dummyData from "@/mocks/dummy.json";
 import style from "./page.module.css";
 import { MovieData } from "@/types";
 
-export default function Page({
+export default async function Page({
   params,
 }: {
   params: {
@@ -10,6 +9,14 @@ export default function Page({
   };
 }) {
   const movieId = Number(params.id);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_MOVIE_API_URL}/movie/${movieId}`
+  );
+  if (!response.ok) {
+    return <div>오류가 발생했습니다 ...</div>;
+  }
+
+  const detailMovie: MovieData = await response.json();
 
   const {
     title,
@@ -20,7 +27,8 @@ export default function Page({
     genres,
     runtime,
     posterImgUrl,
-  } = dummyData.find(({ id }) => id === movieId) as MovieData;
+  } = detailMovie;
+
   return (
     <div className={style.container}>
       <div
