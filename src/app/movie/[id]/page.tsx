@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import style from "./page.module.css";
 import { MovieData } from "@/types";
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_MOVIE_API_URL}/movie`,
