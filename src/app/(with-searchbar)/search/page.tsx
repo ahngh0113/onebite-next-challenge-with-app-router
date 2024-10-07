@@ -12,7 +12,8 @@ export default async function Page({
 }) {
   const serachName = searchParams.q;
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_MOVIE_API_URL}/movie/search?q=${serachName}`
+    `${process.env.NEXT_PUBLIC_MOVIE_API_URL}/movie/search?q=${serachName}`,
+    { cache: "force-cache" }
   );
 
   if (!response.ok) {

@@ -1,5 +1,19 @@
+import { notFound } from "next/navigation";
 import style from "./page.module.css";
 import { MovieData } from "@/types";
+
+export async function generateStaticParams() {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_MOVIE_API_URL}/movie`,
+    { cache: "force-cache" }
+  );
+  if (!response.ok) {
+    throw new Error("error!");
+  }
+
+  const movies: MovieData[] = await response.json();
+  return movies.map(({ id }) => ({ id: id.toString() }));
+}
 
 export default async function Page({
   params,
@@ -13,7 +27,9 @@ export default async function Page({
     `${process.env.NEXT_PUBLIC_MOVIE_API_URL}/movie/${movieId}`
   );
   if (!response.ok) {
-    return <div>오류가 발생했습니다 ...</div>;
+    if (response.status === 404) {
+      return notFound();
+    }
   }
 
   const detailMovie: MovieData = await response.json();
