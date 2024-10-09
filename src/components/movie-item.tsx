@@ -1,5 +1,5 @@
 import React from "react";
-import type { MovieData } from "@/typesc";
+import type { MovieData } from "@/types";
 import style from "./movie-item.module.css";
 
 function MovieItem({ title, posterImgUrl }: MovieData) {
