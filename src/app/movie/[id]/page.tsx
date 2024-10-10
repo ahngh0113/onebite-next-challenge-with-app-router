@@ -57,7 +57,7 @@ export default async function Page({
       </div>
       <div className={style.title}>{title}</div>
       <div>
-        {releaseDate} / {genres.join(", ")} / {runtime}분
+        {releaseDate} / {genres ? genres.join(", ") : ""} / {runtime}분
       </div>
       <div>{company}</div>
       <div className={style.subTitle}>{subTitle}</div>
