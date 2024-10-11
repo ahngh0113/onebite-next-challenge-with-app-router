@@ -9,3 +9,11 @@ export interface MovieData {
   runtime: number;
   posterImgUrl: string;
 }
+
+export interface ReviewData {
+  id: number;
+  createdAt: string;
+  content: string;
+  author: string;
+  movieId: number;
+}
