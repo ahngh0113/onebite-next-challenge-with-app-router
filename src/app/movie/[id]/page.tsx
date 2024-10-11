@@ -20,7 +20,6 @@ export async function generateStaticParams() {
 }
 
 async function MovieDetail({ movieId }: { movieId: string }) {
-  console.log(movieId);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_MOVIE_API_URL}/movie/${movieId}`
   );
@@ -64,7 +63,8 @@ async function MovieDetail({ movieId }: { movieId: string }) {
 
 async function ReviewList({ movieId }: { movieId: string }) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_MOVIE_API_URL}/review/movie/${movieId}`
+    `${process.env.NEXT_PUBLIC_MOVIE_API_URL}/review/movie/${movieId}`,
+    { next: { tags: [`review=${movieId}`] } }
   );
   if (!response.ok) {
     throw new Error(`review fetch fail - ${response.statusText}`);
@@ -74,7 +74,7 @@ async function ReviewList({ movieId }: { movieId: string }) {
   return (
     <section>
       {reviews.map((reviewData) => (
-        <ReviewItem key={reviewData.id} reviewData={reviewData} />
+        <ReviewItem key={reviewData.id} {...reviewData} />
       ))}
     </section>
   );
